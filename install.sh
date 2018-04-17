@@ -15,6 +15,7 @@ echo "Contentful Access Token: $CONTENTFUL_ACCESS_TOKEN"
 echo "Contentful Space Name: $CONTENTFUL_SPACE_NAME"
 echo "Contentful Locale: $CONTENTFUL_LOCALE"
 echo "Netlify Access Token: $NETLIFY_ACCESS_TOKEN"
+echo "Netlify Site Id: $NETLIFY_SITE_ID"
 echo "Web Site Title: $WEB_SITE_TITLE"
 echo "Web Site Description: $WEB_SITE_DESCRIPTION"
 echo "Web Site URL: $WEB_SITE_URL"
@@ -81,21 +82,22 @@ EOL
 
 cd $PROJECT_FOLDER
 
-sed -i s/\{webSiteTitle\}/$WEB_SITE_TITLE/g configs-templates/metadata.yml
-sed -i s/\{webSiteDescription\}/$WEB_SITE_DESCRIPTION/g configs-templates/metadata.yml
-sed -i s/\{webSiteUrl\}/$WEB_SITE_URL/g configs-templates/metadata.yml
-sed -i s/\{webSiteKeywords\}/$WEB_SITE_KEYWORDS/g configs-templates/metadata.yml
-sed -i s/\{webSiteAuthor\}/$WEB_SITE_AUTHOR/g configs-templates/metadata.yml
 
-sed -i s/\{localWebServerDeployFolder\}/$LOCAL_WEB_SERVER_DEPLOY_FOLDER/g configs-templates/deploy.yml
-sed -i s/\{email\}/$WEB_SITE_EMAIL/g configs-templates/deploy.yml
-sed -i s/\{contentfulAccessToken\}/$CONTENTFUL_ACCESS_TOKEN/g configs-templates/deploy.yml
-sed -i s/\{contentfulLocale\}/$CONTENTFUL_LOCALE/g configs-templates/deploy.yml
-sed -i s/\{gitHubRepoPath\}/$GIT_REPO_PATH/g configs-templates/deploy.yml
-sed -i s/\{gitHubRepoUrl\}/$GIT_NETLIFY_URL/g configs-templates/deploy.yml
+sed -i s/\{webSiteTitle\}/"$WEB_SITE_TITLE"/g configs-templates/metadata.yml
+sed -i s/\{webSiteDescription\}/"$WEB_SITE_DESCRIPTION"/g configs-templates/metadata.yml
+sed -i s/\{webSiteUrl\}/"$WEB_SITE_URL"/g configs-templates/metadata.yml
+sed -i s/\{webSiteKeywords\}/"$WEB_SITE_KEYWORDS"/g configs-templates/metadata.yml
+sed -i s/\{webSiteAuthor\}/"$WEB_SITE_AUTHOR"/g configs-templates/metadata.yml
+sed -i s/\{email\}/"$WEB_SITE_EMAIL"/g configs-templates/deploy.yml
+sed -i s/\{contentfulAccessToken\}/"$CONTENTFUL_ACCESS_TOKEN"/g configs-templates/deploy.yml
+sed -i s/\{contentfulLocale\}/"$CONTENTFUL_LOCALE"/g configs-templates/deploy.yml
+sed -i s#\{localWebServerDeployFolder\}#"$LOCAL_WEB_SERVER_DEPLOY_FOLDER"#g configs-templates/deploy.yml
+sed -i s#\{gitHubRepoPath\}#"$GIT_REPO_PATH"#g configs-templates/deploy.yml
+sed -i s#\{gitHubRepoUrl\}#"$GIT_NETLIFY_URL"#g configs-templates/deploy.yml
+sed -i s/\{netlifySiteId\}/"$NETLIFY_SITE_ID"/g configs-templates/deploy.yml
 
-\cp configs-templates/deploy.template.yml $PROJECT_FOLDER/configs/deploy.yml
-\cp configs-templates/settings.template.yml $PROJECT_FOLDER/configs/settings.yml
+\cp configs-templates/deploy.yml configs/deploy.yml
+\cp configs-templates/metadata.yml configs/metadata.yml
 
 # Remove the git folder
 echo -e "I'm removing the .git folder \n"

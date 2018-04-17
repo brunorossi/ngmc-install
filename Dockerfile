@@ -13,6 +13,9 @@ ENV CONTENTFUL_ACCESS_TOKEN ${CONTENTFUL_ACCESS_TOKEN}
 ARG NETLIFY_ACCESS_TOKEN
 ENV NETLIFY_ACCESS_TOKEN ${NETLIFY_ACCESS_TOKEN}
 
+ARG NETLIFY_SITE_ID
+ENV NETLIFY_SITE_ID ${NETLIFY_SITE_ID}
+
 ARG PROJECT_NAME
 ENV PROJECT_NAME ${PROJECT_NAME:-ngmc_blog}
 
@@ -75,6 +78,8 @@ WORKDIR /opt
 
 COPY install.sh install.sh
 
-RUN chmod u+x install.sh && dos2unix install.sh && ./install.sh
+RUN chmod u+x install.sh 
+RUN dos2unix install.sh 
+RUN ./install.sh
 
-WORKDIR $PROJECT_FOLDER
+WORKDIR /opt/$PROJECT_FOLDER

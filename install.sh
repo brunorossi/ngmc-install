@@ -82,7 +82,6 @@ EOL
 
 cd $PROJECT_FOLDER
 
-
 sed -i s/\{webSiteTitle\}/"$WEB_SITE_TITLE"/g configs-templates/metadata.yml
 sed -i s/\{webSiteDescription\}/"$WEB_SITE_DESCRIPTION"/g configs-templates/metadata.yml
 sed -i s/\{webSiteUrl\}/"$WEB_SITE_URL"/g configs-templates/metadata.yml
@@ -119,9 +118,11 @@ git commit -m "${GITHUB_FIRST_COMMIT_MESSAGE}"
 git remote add origin $GIT_CLONE_URL
 
 # Push on master
+echo -e "I'm pushing to the repository"
 git push -u origin master
 
 # install the nodejs packages
+echo -e "I'm installing the nom modules"
 npm install
 
 # run the installation process
@@ -131,6 +132,15 @@ export NODE_ENV=production \
 && npm run generate \
 && npm run build \
 && npm run deploy
+
+# add deploy key to github
+echo -e "I'm adding the deploy key to Github"
+DEPLOY_KEY=$(cat deploy-key.tmp)
+curl \
+-u :${GITHUB_ACCESS_TOKEN} \
+https://api.github.com/repos/${GITHUB_USERNAME}/${PROJECT_NAME}/keys \
+-d "{ \"title\": \"${PROJECT_NAME}-key\", \"key\": \"${DEPLOY_KEY}\", \"read_only\": true }"
+rm deploy-key.tmp
 
 echo "Your project has been successfully initialized!"
 echo "Soon you website will be visible at the following url:"

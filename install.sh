@@ -146,7 +146,7 @@ rm deploy-key.tmp
 curl \
 -u :${GITHUB_ACCESS_TOKEN} \
 https://api.github.com/repos/${GITHUB_USERNAME}/${PROJECT_NAME}/hooks \
--d "{ \"name\": \"${PROJECT_NAME}-hook\", \"config\": { \"url\" : \"https://api.netlify.com/hooks/github\", \"content_type\" : \"json\" }, \"events\": [ \"pull_request\", \"push\", \"delete\" ], \"active\": true }"
+-d "{ \"name\": \"web\", \"config\": { \"url\" : \"https://api.netlify.com/hooks/github\", \"content_type\" : \"json\" }, \"events\": [ \"pull_request\", \"push\", \"delete\" ], \"active\": true }"
  
 echo "Your project has been successfully initialized!"
 echo "Soon you website will be visible at the following url:"
